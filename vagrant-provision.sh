@@ -4,7 +4,7 @@
 echo 'Provisioning from script'
 
 echo 'export MAVEN_OPTS=-Xmx512m
-export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 export JDK_HOME=$JAVA_HOME
 export PATH=$JAVA_HOME/bin:$PATH' > ~/.javarc
 . ~/.javarc

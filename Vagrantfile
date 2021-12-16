@@ -10,16 +10,16 @@ echo 'Dir::Cache { srcpkgcache ""; pkgcache ""; }' > /etc/apt/apt.conf.d/02nocac
 echo 'Acquire::GzipIndexes "true"; Acquire::CompressionTypes::Order:: "gz";' > /etc/apt/apt.conf.d/02compress-indexes
 
 apt-get update -q
-apt-get install -y curl git
-apt-get install -q -y build-essential libxml2-dev libxslt1-dev libsqlite3-dev libmysqlclient-dev libsasl2-dev
+apt-get install -q -y curl git
+apt-get install -q -y build-essential libxml2-dev libxslt1-dev libsqlite3-dev libmysqlclient-dev libsasl2-dev libmaxminddb-dev libyaml-dev
 apt-get install -q -y python-dev python-pip python-virtualenv virtualenvwrapper
-apt-get install -q -y openjdk-7-jdk maven ant
+apt-get install -q -y openjdk-8-jdk maven ant
 
 # MySQL
 MYSQL_PASSWORD=""
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password $MYSQL_PASSWORD'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD'
-apt-get install -q -y mysql-client mysql-server mysql-server-5.5
+apt-get install -q -y mysql-client mysql-server mysql-server
 
 # Redis server
 apt-get install -q -y redis-server
@@ -39,11 +39,7 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise64"
-
-  # The url from where the 'config.vm.box' box will be fetched if it
-  # doesn't already exist on the user's system.
-  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box = "ubuntu/bionic64"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
