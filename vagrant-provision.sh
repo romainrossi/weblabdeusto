@@ -10,7 +10,7 @@ export PATH=$JAVA_HOME/bin:$PATH' > ~/.javarc
 . ~/.javarc
 
 export SHARED_DIR='/weblabdeusto/'
-export ENV_NAME='weblab_env'
+export ENV_NAME='weblab'
 
 . "/etc/bash_completion.d/virtualenvwrapper"
 if [ ! -d /home/vagrant/.virtualenvs/$ENV_NAME ]; then
@@ -18,6 +18,7 @@ if [ ! -d /home/vagrant/.virtualenvs/$ENV_NAME ]; then
   workon $ENV_NAME
   cd $SHARED_DIR
   python setup.py install
+  echo "workon weblab" >> /home/vagrant/.bashrc
   echo 'Finishing provisioning' $ENV_NAME
 else
   echo 'Ignoring existing default environment' $ENV_NAME
