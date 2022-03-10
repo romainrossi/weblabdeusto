@@ -31,6 +31,9 @@ export REDIS_DB=4
 export REDIS_PASSWORD=redispass
 export REDIS_PORT=6379
 
+export SHARED_DIR='/weblabdeusto/'
+export ENV_NAME='weblab'
+
 # MySQL
 apt-get install -q -y mariadb-server
 mariadb -e "CREATE OR REPLACE USER $DB_USER@'localhost' IDENTIFIED BY '$DB_PASSWORD'"
@@ -44,13 +47,11 @@ mariadb -e "FLUSH PRIVILEGES"
 apt-get install -q -y redis-server
 redis-cli config set requirepass $REDIS_PASSWORD
 
-# dependencies for production installation
-# apt-get install -q -y apache2
-# to use threads (don't use if apache must support php)
-apt-get install -q -y apache2-mpm-worker 
+# Apache
+apt-get install -q -y apache2
 
 # program provisioning
-su - vagrant /weblabdeusto/vagrant-provision.sh
+#su - vagrant $SHARED_DIR/vagrant-provision.sh
 SCRIPT
 
 Vagrant.configure("2") do |config|
