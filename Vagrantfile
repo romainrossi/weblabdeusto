@@ -15,19 +15,39 @@ apt-get install -q -y build-essential libxml2-dev libxslt1-dev libsqlite3-dev li
 apt-get install -q -y python-dev python-pip python-virtualenv virtualenvwrapper
 apt-get install -q -y openjdk-8-jdk maven ant
 
+# Configuration
+export WEBLAB_INSTANCE=rooc
+export WEBLAB_ADMIN=rooc
+export WEBLAB_ADMIN_PASSWORD=coor
+export WEBLAB_ADMIN_EMAIL="admin@rooc.esigelec.fr"
+
+export DB_HOST=localhost
+export DB_PORT=3306
+export DB_NAME=weblab
+export DB_USER=weblab
+export DB_PASSWORD=mysqlpass
+
+export REDIS_DB=4
+export REDIS_PASSWORD=redispass
+export REDIS_PORT=6379
+
 # MySQL
-MYSQL_PASSWORD=""
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password $MYSQL_PASSWORD'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD'
-apt-get install -q -y mysql-client mysql-server mysql-server
+apt-get install -q -y mariadb-server
+mariadb -e "CREATE OR REPLACE USER $DB_USER@'localhost' IDENTIFIED BY '$DB_PASSWORD'"
+mariadb -e "CREATE DATABASE $DB_NAME"
+mariadb -e "GRANT ALL PRIVILEGES ON *.* TO $DB_USER@localhost"
+#mariadb -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER@localhost"
+mariadb -e "FLUSH PRIVILEGES"
+
 
 # Redis server
 apt-get install -q -y redis-server
+redis-cli config set requirepass $REDIS_PASSWORD
 
 # dependencies for production installation
 # apt-get install -q -y apache2
 # to use threads (don't use if apache must support php)
-# apt-get install -q -y apache2-mpm-worker 
+apt-get install -q -y apache2-mpm-worker 
 
 # program provisioning
 su - vagrant /weblabdeusto/vagrant-provision.sh
